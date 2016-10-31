@@ -1,1 +1,58 @@
-test
+<!DOCTYPE html>
+
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/styles.css" rel="stylesheet" media="all">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script> 
+  $(document).ready(function(){
+      $("#menu").click(function(){
+          $("#nav").slideToggle("slow");
+      });
+  });
+  </script>
+  
+  <title>Haunold Orienteering Team</title>
+</head>
+
+<body class="home">
+<header>
+  Haunold Orienteering Team
+</header>
+<nav>
+  <div id="menu"><img src="bilder/menu.png" alt="Menu" height="20"></div>
+  <ul id="nav">
+    <a href="index.html"><li>Home</li></a>
+    
+    <?php
+      include "/db_config/config.inc.php";
+      $sql = "select bezeichnung_de from news_typ";
+      $result = mysql_query($sql) or die (mysql_error());
+    
+      while($row = mysql_fetch_array($result))
+        {
+		  echo "<li>".$row['bezeichnung_de']."</li>";
+        }
+        
+    ?>
+  </ul>
+</nav>	
+<main>
+  <section>
+    
+  </section>
+</main>
+<div id="clearfix"></div>
+<footer id="versteckt">
+  Test
+</footer>
+<footer>
+  &copy; Haunold Orienteering Team
+</footer>
+</body>
+
+</html>
