@@ -20,23 +20,34 @@
 </head>
 
 <body class="home">
+<?php    
+include "config.inc.php";
+
+//Mit der Datbenbank verbinden
+$conn=mysqli_connect($db_server,$db_user,$db_passwort,$db_name);
+// Check connection
+if ($conn->connect_error) {
+die("Connection failed: " . $conn->connect_error);
+} 
+?>
 <header>
   Haunold Orienteering Team
 </header>
 <nav>
   <div id="menu"><img src="bilder/menu.png" alt="Menu" height="20"></div>
   <ul id="nav">
-    <a href="index.html"><li>Home</li></a>
     
     <?php
-      include "/db_config/config.inc.php";
-      $sql = "select bezeichnung_de from news_typ";
-      $result = mysql_query($sql) or die (mysql_error());
+      
+      $sql = "SELECT BEZEICHNUNG_DE, LINK FROM HOT_MENUPUNKTE";
+      $result = mysqli_query($conn,$sql) or die (mysqli_connect_error());
     
-      while($row = mysql_fetch_array($result))
+      echo '<a href="index.html"><li>Home</li></a>';
+      while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
         {
-		  echo "<li>".$row['bezeichnung_de']."</li>";
+		  echo '<a href="'.$row['LINK'].'"><li>'.$row['BEZEICHNUNG_DE'].'</li></a>';
         }
+      
         
     ?>
   </ul>
@@ -47,12 +58,17 @@
   </section>
 </main>
 <div id="clearfix"></div>
-<footer id="versteckt">
+<footer id="sponsoren">
   Test
 </footer>
 <footer>
   &copy; Haunold Orienteering Team
 </footer>
+
+<?php
+  $conn->close();
+?>
+
 </body>
 
 </html>
